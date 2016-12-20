@@ -42,6 +42,9 @@
 	}
 </script>
 <style scope>
+#home{
+	    width: 100%;
+}
 .header-swipper{
     height: 240px;
 }
