@@ -1,10 +1,15 @@
 <template>
 	<div id="lyric">
 		<!-- <mt-button @click="getLyric">显示歌词</mt-button> -->
+		
 		<div class="lyric-panel" id="lyric-panel">
-			<!-- <input type="text" :value="audio.currentTime">:<span>{{activeLyricNo}}</span> -->
-			<div v-for="(txt,key) in lycs.txts"  class="lyric-cell" :id="lycs.times[key]" v-bind:class="{ activeLyric: activeLyricNo==lycs.times[key] }"><!-- {{lycs.times[key]}} - -->{{txt}}</div>
+			<transition-group enter-active-class="animated pulse" leave-active-class="animated slideOutRight">
+			<div  v-for="(txt,key) in lycs.txts"  :key="key" class="lyric-cell animated" :id="lycs.times[key]" v-bind:class="{willActiveLyricClass:(Math.abs(key-findIndex)<5) ,activeLyric: activeLyricNo==lycs.times[key]}" v-show="Math.abs(key-findIndex)<5">
+				{{txt}}
+			</div>
+			</transition-group>
 		</div>
+		
 	</div>
 </template>
 
@@ -22,22 +27,28 @@
 			}
 		},
 		computed:{
-			activeLyricNo(){
-				// for(var i=1;i<this.lycs.times.length;i++){
-				// 	if(this.lycs.times[i] >this.audio.setCurrentTime ){
-				// 		console.log(lycs.times[i-1])
-				// 		return this.lycs.times[i-1]
-				// 	}
-				// }
+			willActiveLyric(){
 
-				let that = this
-
-				let finds  = this.lycs.times.findIndex((item, i)=> item > that.audio.currentTime)
+			},
+			findIndex(){
+				let finds  = this.lycs.times.findIndex((item, i)=> item > this.audio.currentTime)
 				// console.log(that.$store.state.audio.currentTime);
 				finds = finds>1?finds-1:0
-				let sh = finds * 32 - document.getElementById("lyric-panel").offsetHeight/2
-				document.getElementById("lyric-panel").scrollTop = sh
-				return this.lycs.times[finds]
+				return finds
+				// 当前查到的对应歌词数组的下标key
+				//如果v-for中abs key-findIndex < 5 即取出对应歌词的前五条和后四条来 
+			},
+			activeLyricNo(){
+
+				// let that = this
+
+				// let finds  = this.lycs.times.findIndex((item, i)=> item > that.audio.currentTime)
+				// // console.log(that.$store.state.audio.currentTime);
+				// finds = finds>1?finds-1:0
+
+				// return this.lycs.times[finds]
+				return this.lycs.times[this.findIndex]
+				//根据找到的键值，直接获取当前歌词的对应秒数
 				
 			},
 			...mapGetters(['audio', 'audioLoadding', 'showPlayer', 'isPlay'])
@@ -99,12 +110,22 @@
 </script>
 <style scope>
 	#lyric{
-		background-color: rgba(0,0,0,0.4);
-		height: 100%;
+		background-color: #2A95E4;
+		width: 100%;
+		overflow: hidden;
+		flex:1;
+		display: flex;
 	}
 	.lyric-panel{
-		height: 80%;
-		overflow: hidden;
+		/*height: 80%;*/
+		width:100%;
+		flex:1;
+		overflow: auto;
+		display: flex;
+    	flex-direction: column;
+    	justify-content: flex-start;
+    	padding-top: 2rem;
+    	overflow: hidden;
 	}
 	.mint-cell{
 		height: 10px;
@@ -114,9 +135,13 @@
 		height: 2rem;
 		line-height: 2rem;
 		font-size:1rem;
+		transition: font ease 2s;
 	}
 	.activeLyric{
-		font-size:1.5rem;
-		color:red;
+		font-size:1.2rem;
+		color:#fff!important;
+	}
+	.willActiveLyricClass{
+		color:#dd9;
 	}
 </style>

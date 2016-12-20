@@ -1,8 +1,10 @@
 <template>
   <div id="app">
-    <app-header></app-header>
-    <div class="app-container">
-      <router-view></router-view>
+    <div class="main">
+      <app-header></app-header>
+      <div class="app-container">
+        <router-view></router-view>
+      </div>
     </div>
     <app-player></app-player>
   </div>
@@ -64,18 +66,38 @@ export default {
 </script>
 
 <style>
+html, body{
+  height: 100%;
+  margin:0;
+  padding: 0
+}
 body{
     font-size: 1.4rem;
     line-height: 1.2;
 }
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
+  font-family: "Microsoft YaHei","微软雅黑",'\65B0\5B8B\4F53','\5B8B\4F53',Verdana;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin: 0;
-  padding:0;
+      width: 100%;
+    height: 100%;
+}
+.main{
+    margin: 0;
+    padding:0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+}
+.app-header{
+  flex:0 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 h1, h2 {
@@ -96,10 +118,12 @@ a {
   color: #42b983;
 }
 .app-container{
-  position: absolute;
-  bottom:0;
   width:100%;
-  height: 80%;
   margin-top:4px;
+  min-height: 400px;
+  flex:1 1 1px;
+  /*flex-grow: 1*/
+  overflow: hidden;
+  display: flex;
 }
 </style>

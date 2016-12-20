@@ -42,5 +42,7 @@
 	div#search {
     	margin-top: 1rem;
     	margin-right: 1rem;
+    	width: 100%;
+    	text-align: left;
 	}
 </style>

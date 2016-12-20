@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="app-header">
 		<div class="header-title">
 			<div class="header-logo">
 				<img src="../assets/logo.png">
@@ -39,51 +39,60 @@
 </script>
 <style scope>
 	.header-title{
-		box-sizing:border-box;
-		background-color: #2CA2F9;
-		width:100%;
-		height: 5rem;
-		position: fixed;
-	    top: 0px;
-	    left: 0px;
-	    padding: 1rem 0.5rem;
+	    box-sizing: border-box;
+	    background-color: #2CA2F9;
+	    width: 100%;
+	    height: 4rem;
+	    padding: 0.5rem 0.1rem;
+	    display: flex;
+	    flex-direction: row;
+	    align-items: center;
 	}
 	.header-title .header-logo{
-		float:left;
-		width:50%;
+		width:40%;
 		vertical-align: middle;
-
+		flex:2 1 200px;
+	    display: flex;
+    	justify-content: flex-start;
+    	padding-left:5px;
 	}
 	.header-logo img{
 		display: block;
-		width:100%;
+		height: 100%;
 		vertical-align: center;
 	}
 	.header-title .header-download{
-		float:left;
 		color:#fff;
 		font-size:1rem;
 		margin-left:2%;
-		margin-top:1rem;
+
+		width:40%;
 		height: 100%;
 		font-family: 'helvetica neue','hiragino sans gb',stheiti,'wenquanyi micro hei',\5FAE\8F6F\96C5\9ED1,\5B8B\4F53,sans-serif;
+		display: flex;
+		flex:1 0 80px;
+		justify-content: center;
 	}
 	.header-download a{
-		display: block;
-		color:#fff;
-		padding:4px 10px;
-		border:2px solid #fff;
-		border-radius:4px;
+	    display: block;
+	    color: #fff;
+	    padding: 4px 10px;
+	    border: 2px solid #fff;
+	    border-radius: 4px;
+	    align-self: flex-end;
+	    font-size: 0.5rem;
 	}
 	.header-title .header-search{
-		float:right;
 		color:#fff;
+		align-self: flex-end;
+		flex: 0 1 40px;
 	}
 	.header-nav{
-		position: fixed;
+/*		position: fixed;
 		top:5rem;
-		left:0px;
+		left:0px;*/
 		width:100%;
+		height: 50px;
 		margin-right: 20px;
 	}
 	.header-nav .mint-tab-item-label {

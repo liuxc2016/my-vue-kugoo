@@ -1,5 +1,5 @@
 <template>
-	<div class="player" v-show="bshow" :class="{'audio_panel_hide':toggleHide}">
+	<div class="player app-player" v-show="bshow" :class="{'audio_panel_hide':toggleHide}">
 		<audio :src="audio.musicSrc" loop id="audioPlay" @timeupdate="change()"></audio>
 		<div class="player-panel-control" @click="togglePanel">
 			<mt-spinner type="snake" :size="27" v-show="songIsLogin"></mt-spinner>
@@ -11,16 +11,17 @@
 			<div class="player-text">
 				<div class="name">{{audio.name}}</div>
 				<div class="author">{{audio.author}}</div>
-			</div>
-			<div class="player-btn-group">
 				<div class=" player-progree-bar">
 					<mt-range v-model="rangeValue" :min="0" :max="audio.totalTime" :barHeight="barHeight">
 					  <div slot="start" class="start-flag">0</div>
 					  <div slot="end" class="end-flag">{{audio.currentTime | my-filter-time}} /{{audio.totalTime | my-filter-time}}</div>
 					</mt-range>
 				</div>
-				<span class="player-btn" @click="toggleStatus">{{playStatusButton}}</span>
-				<span class="player-btn" @click="getNextSong">^</span>
+			</div>
+			<div class="player-btn-group">
+				<span class="player-btn mplay-btn mplay-prev-btn" @click="getNextSong"></span>
+				<span class="player-btn mplay-btn" :class="playingClass" @click="toggleStatus"></span>
+				<span class="player-btn mplay-btn mplay-next-btn" @click="getNextSong"></span>
 			</div>
 		</div>
 		
@@ -51,6 +52,9 @@ export default {
 		}
 	},
 	computed:{
+		playingClass(){
+			return this.audio.isPlaying? 'mplay-zan-btn': 'mplay-play-btn'
+		},
 		rangeValue:{
 			get(){
 				return parseInt(this.audio.currentTime);
@@ -119,9 +123,11 @@ export default {
 		width:100%;
 		height: 100px;
 		background: rgba(0,0,0,0.8);
-		border:1px solid green;
 		color:#fff;
-		padding:10px 30px;
+		padding:10px 10px;
+		display: flex;
+		overflow: hidden;
+		box-sizing: border-box;
 	}
 	.player-panel-control{
 		height: 35px;
@@ -137,18 +143,19 @@ export default {
 	    overflow: hidden;
 	}
 	.musiclogo{
-		float:left;
 		width:78px;
 		height: 78px;
 		border:1px solid #ccc;
+		flex:0 0 auto;
 	}
 	.musiclogo img{
 		width:100%;
 		height:100%;
 	}
 	.player-text{
-		float:left;
 		margin-left: 1rem;
+		flex:1 1 auto;
+		align-items: flex-start;
 		display: flex;
 		flex-direction:column;
 		font-size:1.5rem;
@@ -159,7 +166,7 @@ export default {
 	    height: 2rem;
 	    width: 9rem;
 	    font-size: 15px;
-	    font-family: sim-song;
+	    /*font-family: sim-song;*/
 	    text-overflow: ellipsis;
 	}
 	.player-text .author{
@@ -167,15 +174,10 @@ export default {
 
 		height: 2rem;
 	}
-	.player-btn-group{
-		float:rigth;
-		font-size:2rem;
-	}
+
 	 .player-progree-bar{
-	 	position: absolute;
 	 	top:6.5rem;
-	 	left:8rem;
-	 	width:40%;
+	 	width: 90%;
 	 	font-size:10px;
 	 }
 	 .start-flag{
@@ -184,4 +186,35 @@ export default {
 	 .end-flag{
 	 	margin-left:4px;
 	 }
+ 	.player-btn-group{
+		flex: 0 0 110px;
+		display: flex;
+		align-items: center;
+	}
+	 .mplay-btn{
+	 	width:40px;
+	 	height: 40px;
+	 	background-position:center;
+	 	background-size: contain;
+	 	background-repeat: no-repeat;
+	 }
+	 .mplay-play-btn{
+	 	margin:0 5px;
+	 	background-image: url("../assets/play.png")
+	 }
+	 .mplay-zan-btn{
+	 	margin:0 5px;
+	 	background-image: url("../assets/zan.png")
+	 }
+	 .mplay-prev-btn{
+	 	width:30px;
+	 	height: 30px;
+	 	background-image: url("../assets/prev.png")
+	 }
+ 	 .mplay-next-btn{
+	 	width:30px;
+	 	height: 30px;
+	 	background-image: url("../assets/next.png")
+	 }
+
 </style>
