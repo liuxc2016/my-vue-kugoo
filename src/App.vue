@@ -97,7 +97,9 @@ a {
 }
 .app-container{
   position: absolute;
-  top:355px;
+  bottom:0;
   width:100%;
+  height: 80%;
+  margin-top:4px;
 }
 </style>

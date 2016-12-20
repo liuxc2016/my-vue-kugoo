@@ -8,7 +8,7 @@
 		    	<a herf="a.txt">{{headTitle}}</a>
 		    </div>
 		    <div class="header-search">
-		    	<img src="http://m.kugou.com/v3/static/images/index/search.png" alt="search">
+		    	<img src="http://m.kugou.com/v3/static/images/index/search.png" alt="search" @click="gotoSearch">
 		    </div>
 		</div>
 	    <div class="header-nav">
@@ -20,84 +20,76 @@
 			  <mt-tab-item id="5">彩铃</mt-tab-item>
 			</mt-navbar>
 		</div>
-		<div class="header-swipper">
-			<mt-swipe :show-indicators="false">
-			  <mt-swipe-item><img src="../assets/slide/1.jpg"></mt-swipe-item>
-			  <mt-swipe-item><img src="../assets/slide/2.jpg"></mt-swipe-item>
-			</mt-swipe>
-		</div>
     </div>
 </template>
 <script>
 	export default {
 		data(){
 			return {
-				headTitle: "流光音乐盒",
+				headTitle: "点击下载",
 				bangumiId: '2'
+			}
+		},
+		methods:{
+			gotoSearch(){
+				this.$router.replace("/search")
 			}
 		}
 	}
 </script>
 <style scope>
 	.header-title{
+		box-sizing:border-box;
 		background-color: #2CA2F9;
 		width:100%;
-		height: 60px;
+		height: 5rem;
 		position: fixed;
 	    top: 0px;
 	    left: 0px;
-	    padding: 10px 20px;
+	    padding: 1rem 0.5rem;
 	}
 	.header-title .header-logo{
-		margin-left: 10%;
 		float:left;
-		height:40px;
+		width:50%;
 		vertical-align: middle;
 
 	}
 	.header-logo img{
-		/*display: block;*/
-		height: 40px;
+		display: block;
+		width:100%;
 		vertical-align: center;
 	}
 	.header-title .header-download{
 		float:left;
 		color:#fff;
-		font-size:26px;
-		margin-left: 60px;	
+		font-size:1rem;
+		margin-left:2%;
+		margin-top:1rem;
+		height: 100%;
 		font-family: 'helvetica neue','hiragino sans gb',stheiti,'wenquanyi micro hei',\5FAE\8F6F\96C5\9ED1,\5B8B\4F53,sans-serif;
 	}
 	.header-download a{
+		display: block;
 		color:#fff;
-		padding:4px 100px;
+		padding:4px 10px;
 		border:2px solid #fff;
 		border-radius:4px;
 	}
 	.header-title .header-search{
-		margin-right: 30px;
 		float:right;
 		color:#fff;
 	}
 	.header-nav{
 		position: fixed;
-		top:61px;
+		top:5rem;
 		left:0px;
 		width:100%;
 		margin-right: 20px;
 	}
 	.header-nav .mint-tab-item-label {
 	    color: inherit;
-	    font-size: 18px;
+	    font-size: 1rem;
 	    font-family: microsoft yahei;
 	}
-	.header-swipper{
-		position: absolute;
-	    top: 116px;
-	    height: 240px;
-		width: 100%;
-		border:1px solid #DADBDC;
-	}
-	.header-swipper img{
-		height: 100%;
-	}
+
 </style>

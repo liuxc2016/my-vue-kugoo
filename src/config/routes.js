@@ -2,6 +2,8 @@ import App from '../App.vue'
 import Login from "../components/login.vue"
 import Signout from "../components/signout.vue"
 import Home from "../components/home.vue"
+import Search from "../components/search.vue"
+import Lyric from "../components/lyric.vue"
 
 
 export default [
@@ -21,5 +23,13 @@ export default [
 			}
 		]
 	},
+	{
+		path: '/search',
+		component: Search
+	},
+	{
+		path: '/lyric',
+		component: Lyric
+	}
 
 ]

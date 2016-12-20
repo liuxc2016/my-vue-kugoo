@@ -6,7 +6,7 @@
 		</div>
 		<div class="player-panel">
 			<div class="musiclogo">
-				<img src="http://singerimg.kugou.com/uploadpic/softhead/100/20150127/20150127160115173326.jpg">
+				<img :src="audio.imgUrl" @click="goToLyricPage">
 			</div>
 			<div class="player-text">
 				<div class="name">{{audio.name}}</div>
@@ -76,8 +76,15 @@ export default {
 				document.getElementById("audioPlay").pause();
 			}
 		},
+		goToLyricPage(){
+			this.$router.replace("/lyric")
+		},
 		getNextSong: function(){
-			this.$store.dispatch("playNextSong");
+			this.$store.dispatch('getSongDetail')
+			this.$store.commit("playNextSong");
+		},
+		getSongList: function(){
+			this.$store.dispatch('getSongList', this)
 		},
 		change(){
 			let time = document.getElementById("audioPlay").currentTime.toFixed(0);
@@ -94,7 +101,7 @@ export default {
 	}
 }
 </script>
-<style scope>
+<style>
 	.player{
 		width:100%;
 		height: 135px;
@@ -141,30 +148,34 @@ export default {
 	}
 	.player-text{
 		float:left;
-		margin-left: 60px;
+		margin-left: 1rem;
 		display: flex;
 		flex-direction:column;
-		font-size:40px;
+		font-size:1.5rem;
 		text-align: left;
 		text-overflow: ellipsis;
 	}
 	.player-text .name{
-		height: 40px;
+	    height: 2rem;
+	    width: 9rem;
+	    font-size: 15px;
+	    font-family: sim-song;
+	    text-overflow: ellipsis;
 	}
 	.player-text .author{
-		font-size:30px;
+		font-size:1rem;
 
-		height: 40px;
+		height: 2rem;
 	}
 	.player-btn-group{
 		float:rigth;
-		font-size:80px;
+		font-size:2rem;
 	}
 	 .player-progree-bar{
 	 	position: absolute;
-	 	top:40px;
-	 	left:360px;
-	 	width:240px;
+	 	top:6.5rem;
+	 	left:8rem;
+	 	width:40%;
 	 	font-size:10px;
 	 }
 	 .start-flag{
