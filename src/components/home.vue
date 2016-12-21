@@ -8,7 +8,7 @@
 		</div>
 		<div class="musiclist">
 			<mt-cell :title="song.title" v-for="song in songs">
-			  <span>{{song.linktitle}}</span>
+			  <span @click="playIt(song.hash)">{{song.linktitle}}</span>
 			  <img slot="icon" :src="song.imgUrl" width="24" height="24">
 			</mt-cell>
 		</div>
@@ -37,6 +37,12 @@
 					}
 
 				]
+			}
+		},
+		methods:{
+			playIt(val){
+				this.$store.dispatch("playAnSongWithHash", val)
+				console.log(val)
 			}
 		}
 	}

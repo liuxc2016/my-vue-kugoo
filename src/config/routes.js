@@ -12,10 +12,13 @@ import Lyric from "../components/lyric.vue"
 
 //排行
 import Rank from "../components/rank.vue"
+import RankInfo from "../components/rankinfo.vue"
 //歌单
 import Plist from "../components/plist.vue"
 //歌手
 import Singer from "../components/singer.vue"
+
+
 
 
 export default [
@@ -46,6 +49,10 @@ export default [
 	{
 		path: '/rank',
 		component: Rank
+	},
+	{
+		path: '/rank/:id',
+		component: RankInfo	
 	},
 	{
 		path: '/plist',

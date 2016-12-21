@@ -14,6 +14,7 @@ const SIG_SIGNOUT = 'SIG_SIGNOUT'
 export default new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production', //在非生产环境下，使用严格模式
     state: {
+    	bShowNav: true,
     	headNav:1,	//当前naviBar对应的id
 		user:{
 			id:0,
@@ -45,6 +46,7 @@ export default new Vuex.Store({
   	},
 	mutations: {
 		setHeadNav: (state , id) => state.headNav = id,
+		setbShowNav: (state, val) => state.bShowNav = val,
 		setCurrentTime: (state, time) => {
 			state.audio.currentTime = time
 		},
@@ -173,6 +175,32 @@ export default new Vuex.Store({
 				}
 				context.commit('setAudio', dsong);
 				context.dispatch('getLyric', searchAudio.hash);
+			},function(err){
+				alert('网络错误')
+			})
+		},
+		playAnSongWithHash(context, hashVal){
+			const apiurl = "https://bird.ioliu.cn/v1?url="
+			const durl = apiurl+'http://m.kugou.com/app/i/getSongInfo.php?cmd=playInfo&hash='+hashVal
+			axios.get(durl).then(function(res){
+				// console.log(res.data)
+				window.p = res.data
+				let dsong = {
+					isPlaying: false,
+					musicSrc: res.data.url,
+					imgUrl:res.data.imgUrl.replace("{size}", 80),
+					totalLen:res.data.timeLength,
+					playedLen:0,
+					name:res.data.fileName,
+					author:res.data.singerName,
+					currentTime:0,//当前播放时间
+					currentLength:0,
+					totalTime:res.data.timeLength,
+					hash:hashVal,
+					currentSetFlag:false  //是否在调整时间
+				}
+				context.commit('setAudio', dsong);
+				context.dispatch('getLyric', hashVal);
 			},function(err){
 				alert('网络错误')
 			})

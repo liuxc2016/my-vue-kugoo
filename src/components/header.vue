@@ -11,7 +11,7 @@
 		    	<img src="http://m.kugou.com/v3/static/images/index/search.png" alt="search" @click="gotoSearch">
 		    </div>
 		</div>
-	    <div class="header-nav">
+	    <div class="header-nav" v-show="bShowNav">
 			<mt-navbar v-model="bangumiId">
 			  <mt-tab-item id="1" @click.native="setNav(1)">新歌</mt-tab-item>
 			  <mt-tab-item id="2" @click.native="setNav(2)">排行</mt-tab-item>
@@ -32,7 +32,7 @@ import {mapState} from 'vuex'
 			}
 		},
 		computed: {
-	      ...mapState(['headNav'])
+	      ...mapState(['headNav', 'bShowNav'])
 	    },
 		methods:{
 			setNav(id){
@@ -119,6 +119,7 @@ import {mapState} from 'vuex'
 		width:100%;
 		height: 50px;
 		margin-right: 20px;
+		margin-bottom: 3px;
 	}
 	.header-nav .mint-tab-item-label {
 	    color: inherit;

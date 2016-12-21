@@ -72,8 +72,8 @@ html, body{
   padding: 0
 }
 body{
-    font-size: 1.4rem;
-    line-height: 1.2;
+    font-size: 1rem;
+    line-height: 1.2rem;
 }
 #app {
   /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
@@ -119,7 +119,7 @@ a {
 }
 .app-container{
   width:100%;
-  margin-top:4px;
+  margin-top:0px;
   min-height: 400px;
   flex:1 1 1px;
   /*flex-grow: 1*/

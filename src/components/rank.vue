@@ -2,7 +2,7 @@
 	<div id="rank">
 		<div class="rank-list">
 			<mt-cell :title="rank.title" v-for="rank in ranks">
-			  <span>点击试听</span>
+			  <span><router-link to="/rank/222">点击浏览</router-link></span>
 			  <img slot="icon" :src="rank.imgUrl" width="24" height="24">
 			</mt-cell>
 		</div>
@@ -10,18 +10,19 @@
 </template>
 
 <script>
+import { mapStates } from 'vuex'
 export default {
 	data(){
 		return {
 			ranks:[
 				{
 					title: '经典老歌',
-					imgUrl: ''
+					imgUrl: require("../assets/rank/ktv.png")
 				},
 				{
 					title: '日语新歌',
 					imgUrl: ''
-				},
+				}
 			]
 		}
 	}
