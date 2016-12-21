@@ -15,6 +15,8 @@ import Rank from "../components/rank.vue"
 import RankInfo from "../components/rankinfo.vue"
 //歌单
 import Plist from "../components/plist.vue"
+import PlistInfo from "../components/plistinfo.vue"
+
 //歌手
 import Singer from "../components/singer.vue"
 
@@ -52,11 +54,17 @@ export default [
 	},
 	{
 		path: '/rank/:id',
+		name: 'rankinfo',
 		component: RankInfo	
 	},
 	{
 		path: '/plist',
 		component: Plist
+	},
+	{
+		path: '/plist/:id',
+		name: 'plistinfo',
+		component: PlistInfo	
 	},
 	{
 		path: '/singer',

@@ -1,14 +1,14 @@
 <template>
 	<div class="rankinfo">
 		<div class="top-goback" id="top-goback">
-			<p class="page-title">酷狗飙升榜</p>
+			<p class="page-title">歌单</p>
 			<div class="goback" id="goback">
 	    		<i @click="navGoback"></i>
 	    	</div>
 		</div>
 		<div class="rankinfo-list">
-			<mt-cell :title="rank.name" v-for="rank in rankinfos">
-			  <span @click="playIt(rank.hash)">点击试听</span>
+			<mt-cell :title="music.name" v-for="music in plistinfos">
+			  <span @click="playIt(music.hash)">点击试听</span>
 			 </mt-cell>
 		</div>
 	</div>
@@ -19,7 +19,7 @@ import axios from 'axios'
 export default{
 	data(){
 		return {
-			rankinfos:[]
+			plistinfos:[]
 		}
 	},
 	computed:{
@@ -31,13 +31,14 @@ export default{
 			this.$store.dispatch("playAnSongWithHash", hashVal)
 		},
 		navGoback(){
-			this.$router.push("/rank")
+			this.$router.push("/plist")
 		},
 		getSonglist(){
-			let gurl = 'http://www.toudin.com/kuapi.php?id=' + this.$route.params.id
+			let gurl = 'http://www.toudin.com/kuapi.php?type=plistinfo&id=' + this.$route.params.id
 			let that = this
 			axios.get(gurl).then(function(res){
-				that.rankinfos = res.data;
+				console.log(res.data[1].name);
+				that.plistinfos = res.data;
 			})
 		}
 	},

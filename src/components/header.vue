@@ -13,7 +13,7 @@
 		</div>
 	    <div class="header-nav" v-show="bShowNav">
 			<mt-navbar v-model="bangumiId">
-			  <mt-tab-item id="1" @click.native="setNav(1)">新歌</mt-tab-item>
+			  <mt-tab-item id="1" @click.native="setNav(1)">推荐</mt-tab-item>
 			  <mt-tab-item id="2" @click.native="setNav(2)">排行</mt-tab-item>
 			  <mt-tab-item id="3" @click.native="setNav(3)">歌单</mt-tab-item>
 			  <mt-tab-item id="4" @click.native="setNav(4)">歌手</mt-tab-item>

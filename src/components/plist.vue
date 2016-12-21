@@ -1,8 +1,8 @@
 <template>
 	<div id="plist">
 		<div class="p-list">
-			<mt-cell :title="plist.title" v-for="plist in plists">
-			  <span>点击试听</span>
+			<mt-cell :title="plist.name" v-for="plist in plists">
+			<span><router-link :to="{ name: 'plistinfo', params: { id: plist.id }}">点击浏览{{plist.listend}}</router-link></span>
 			  <img slot="icon" :src="plist.imgUrl" width="24" height="24">
 			</mt-cell>
 		</div>
@@ -10,20 +10,24 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
 	data(){
 		return {
-			plists:[
-				{
-					title: '经典老歌',
-					imgUrl: ''
-				},
-				{
-					title: '日语新歌',
-					imgUrl: ''
-				},
-			]
+			plists:[]
 		}
+	},
+	methods:{
+		getPlist(){
+			let gurl = 'http://localhost/test/rank.php?type=plist'
+			let that = this
+			axios.get(gurl).then(function(res){
+				that.plists = res.data;
+			})
+		}
+	},
+	created(){
+		this.getPlist()
 	}
 }
 	

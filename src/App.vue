@@ -123,7 +123,8 @@ a {
   min-height: 400px;
   flex:1 1 1px;
   /*flex-grow: 1*/
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   display: flex;
 }
 </style>
