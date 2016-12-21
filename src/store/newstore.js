@@ -14,10 +14,7 @@ const SIG_SIGNOUT = 'SIG_SIGNOUT'
 export default new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production', //在非生产环境下，使用严格模式
     state: {
-		count: 0,
-		overCount: 5,
-		ggg : '333',
-		twoSideCount: 99,
+    	headNav:1,	//当前naviBar对应的id
 		user:{
 			id:0,
 			name:'guest',
@@ -47,6 +44,7 @@ export default new Vuex.Store({
 	    searchList: state => state.searchList
   	},
 	mutations: {
+		setHeadNav: (state , id) => state.headNav = id,
 		setCurrentTime: (state, time) => {
 			state.audio.currentTime = time
 		},

@@ -13,16 +13,17 @@
 		</div>
 	    <div class="header-nav">
 			<mt-navbar v-model="bangumiId">
-			  <mt-tab-item id="1">新歌</mt-tab-item>
-			  <mt-tab-item id="2">排行</mt-tab-item>
-			  <mt-tab-item id="3">歌单</mt-tab-item>
-			  <mt-tab-item id="4">歌手</mt-tab-item>
-			  <mt-tab-item id="5">彩铃</mt-tab-item>
+			  <mt-tab-item id="1" @click.native="setNav(1)">新歌</mt-tab-item>
+			  <mt-tab-item id="2" @click.native="setNav(2)">排行</mt-tab-item>
+			  <mt-tab-item id="3" @click.native="setNav(3)">歌单</mt-tab-item>
+			  <mt-tab-item id="4" @click.native="setNav(4)">歌手</mt-tab-item>
+			  <mt-tab-item id="5" @click.native="setNav(5)">彩铃</mt-tab-item>
 			</mt-navbar>
 		</div>
     </div>
 </template>
 <script>
+import {mapState} from 'vuex'
 	export default {
 		data(){
 			return {
@@ -30,7 +31,31 @@
 				bangumiId: '2'
 			}
 		},
+		computed: {
+	      ...mapState(['headNav'])
+	    },
 		methods:{
+			setNav(id){
+				this.$store.commit('setHeadNav', id)
+				switch(id){
+					case 1:
+						this.$router.push({path:'/home'})
+						break
+					case 2:
+						this.$router.push({path:'/rank'})
+						break
+					case 3:
+						this.$router.push({path:'/plist'})
+						break
+					case 4:
+						this.$router.push({path:'/singer'})
+						break
+					case 5:
+						this.$router.push({path:'/ring'})
+						break
+
+				}
+			},
 			gotoSearch(){
 				this.$router.replace("/search")
 			}

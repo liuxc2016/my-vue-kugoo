@@ -135,11 +135,12 @@
 		height: 2rem;
 		line-height: 2rem;
 		font-size:1rem;
-		transition: font ease 2s;
 	}
 	.activeLyric{
 		font-size:1.2rem;
 		color:#fff!important;
+		transition: font ease 0.5s;
+		
 	}
 	.willActiveLyricClass{
 		color:#dd9;
