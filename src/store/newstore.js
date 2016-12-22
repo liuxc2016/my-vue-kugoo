@@ -33,9 +33,25 @@ export default new Vuex.Store({
 			totalTime:261,
 			currentSetFlag:false,  //是否在调整时间,
 			hash:'57b83eaf673d77ee21009cbd8fd05bd6',
-			lyric:{}
+			lyric:{
+				times:[],
+				txts:[]
+			}
 		},
-		songList:[],   //歌单
+		songList:[
+			{
+				name:'慢慢',
+				hash:'870341734B5907D83344A6C5352F2B67'
+			},
+			{
+				name:'海角七号',
+				hash:'9E8EA295D5622BBF5023E3228AD40523'
+			},
+			{
+				name:'爱情转移',
+				hash:'688EF55D43867D0065492B58EE17CA69'
+			}
+		],   //歌单
 		willPlay:{},
 		searchList:[],  //搜索列表: {name: hash}
 		songIsLogin:false
@@ -64,6 +80,7 @@ export default new Vuex.Store({
 			state.searchList = newSearch
 		},
 		addToSongList(state, song){
+			console.log('添加歌曲至列表成功'+ song.hash);
 			state.songList.push(song)
 		},
 
@@ -73,7 +90,7 @@ export default new Vuex.Store({
 		setWillPlay(state){
 			// getSongDetail();
 			let music = state.songList.pop();
-			console.log(state.songList)
+			// console.log(state.songList)
 			state.willPlay = music;
 		},
 	},
@@ -105,6 +122,7 @@ export default new Vuex.Store({
 		},
 
 		getSearchList(context, obj){
+			console.log('开始搜索歌词:'+obj);
 			// let listUrl = 'https://bird.ioliu.cn/v1?url='+'http://mobilecdn.kugou.com/api/v3/search/song?format=jsonp&keyword=%E4%BB%99%E5%89%91&page=1&pagesize=10&showtype=1&callback=kgJSONP238513750'
 			let listUrl = 'https://bird.ioliu.cn/v1?url='+'http://mobilecdn.kugou.com/api/v3/search/song?format=jsonp&keyword='+obj
 			let searchAudios = []
@@ -134,11 +152,12 @@ export default new Vuex.Store({
 			})
 		},
 		getSongDetail(context, hash){
+			console.log('开始获取歌曲细节：'+ hash);
 			//let durl = "http://trackercdn.kugou.com/i/v2/?cdnBackup=1&behavior=play&key=e1408b261057bd0238bd7a9ca1d33a1e&pid=6&module=&appid=2739&cmd=23&hash=88C7AE08A4A0B38552D9C33992EF1872"
 			const apiurl = "https://bird.ioliu.cn/v1?url="
-			const durl = apiurl+'http://m.kugou.com/app/i/getSongInfo.php?hash=2b616f6ab9f8655210fd823b900085cc&cmd=playInfo'
+			const durl = apiurl+'http://m.kugou.com/app/i/getSongInfo.php?cmd=playInfo&hash='+hash
 			axios.get(durl).then(function(res){
-				console.log(res.data)
+				// console.log(res.data)
 				window.p = res.data
 				let dsong = {
 					isPlaying: false,
@@ -151,7 +170,11 @@ export default new Vuex.Store({
 					currentTime:0,//当前播放时间
 					currentLength:0,
 					totalTime:res.data.timeLength,
-					currentSetFlag:false  //是否在调整时间
+					currentSetFlag:false,  //是否在调整时间
+					lyric:{
+						times:[],
+						txts:[]
+					}
 				}
 				context.commit('setAudio', dsong);
 			},function(err){
@@ -159,59 +182,15 @@ export default new Vuex.Store({
 			})
 		},
 		playAnSong(context, searchAudio){
-			const apiurl = "https://bird.ioliu.cn/v1?url="
-			const durl = apiurl+'http://m.kugou.com/app/i/getSongInfo.php?cmd=playInfo&hash='+searchAudio.hash
-			axios.get(durl).then(function(res){
-				// console.log(res.data)
-				window.p = res.data
-				let dsong = {
-					isPlaying: false,
-					musicSrc: res.data.url,
-					imgUrl:res.data.imgUrl.replace("{size}", 80),
-					totalLen:res.data.timeLength,
-					playedLen:0,
-					name:res.data.fileName,
-					author:res.data.singerName,
-					currentTime:0,//当前播放时间
-					currentLength:0,
-					totalTime:res.data.timeLength,
-					hash:searchAudio.hash,
-					currentSetFlag:false  //是否在调整时间
-				}
-				context.commit('setAudio', dsong);
-				context.dispatch('getLyric', searchAudio.hash);
-			},function(err){
-				alert('网络错误')
-			})
+			context.dispatch("getSongDetail", searchAudio.hash)
+			context.dispatch("getLyric", searchAudio.hash)
 		},
 		playAnSongWithHash(context, hashVal){
-			const apiurl = "https://bird.ioliu.cn/v1?url="
-			const durl = apiurl+'http://m.kugou.com/app/i/getSongInfo.php?cmd=playInfo&hash='+hashVal
-			axios.get(durl).then(function(res){
-				// console.log(res.data)
-				window.p = res.data
-				let dsong = {
-					isPlaying: false,
-					musicSrc: res.data.url,
-					imgUrl:res.data.imgUrl.replace("{size}", 80),
-					totalLen:res.data.timeLength,
-					playedLen:0,
-					name:res.data.fileName,
-					author:res.data.singerName,
-					currentTime:0,//当前播放时间
-					currentLength:0,
-					totalTime:res.data.timeLength,
-					hash:hashVal,
-					currentSetFlag:false  //是否在调整时间
-				}
-				context.commit('setAudio', dsong);
-				context.dispatch('getLyric', hashVal);
-				// document.getElementById("audioPlay").play();
-			},function(err){
-				alert('网络错误')
-			})
+			context.dispatch("getSongDetail", hashVal)
+			context.dispatch("getLyric", hashVal)
 		},
 		getLyric(context, hashval){
+			console.log('开始获取歌词了'+ hashval)
 			// hashval = '53df727308694879cfb2bf2c65fdb578'
 			let lurl = "http://lavyun.applinzi.com/apis/getLrc.php?hash=" + hashval
 			// let lurl = "getLrc.txt?hash=" + this.audio.hash
@@ -221,12 +200,6 @@ export default new Vuex.Store({
 					txts:[]
 				}
 				let lycOrigin = res.data
-			    // _regAr = /\[ar:(.+)\]/
-			    // _regTi = /\[ti:(.+)\]/
-			    // _regAl = /\[al:(.+)\]/
-			    // _regBy = /\[by:(.+)\]/
-			    // _regOffset = /\[offset:.+\]/
-			    // _regTime = /\[\d+:\d+(\.\d+)?\]/g
 			    let arr=lycOrigin.match(/(\[\d{2}:\d{2}\.\d{2}\])(.[^\[\]]*)?/g);
 			    let times=[],txts=[];
 
@@ -238,13 +211,14 @@ export default new Vuex.Store({
 					times.push(stime);
 					txts.push(RegExp.$2);
 				}
+				lyrics.times = times;
+				lyrics.txts = txts;
 				context.commit("setLyric", lyrics)
 			})
 		},
 		playNextSong(context){
 			if(context.state.songList.length > 0){
 				context.commit('setWillPlay')
-			
 				context.dispatch("playAnSongWithHash", context.state.willPlay.hash);
 			}else{
 				console.log('播放列表已经是空的了');

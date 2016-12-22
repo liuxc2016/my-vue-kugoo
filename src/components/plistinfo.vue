@@ -38,7 +38,7 @@ export default{
 			let gurl = 'http://www.toudin.com/kuapi.php?type=plistinfo&id=' + this.$route.params.id
 			let that = this
 			axios.get(gurl).then(function(res){
-				console.log(res.data[1].name);
+				// console.log(res.data[1].name);
 				that.plistinfos = res.data;
 			})
 		},
