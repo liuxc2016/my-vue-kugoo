@@ -3,7 +3,9 @@
     <div class="main">
       <app-header></app-header>
       <div class="app-container">
-        <router-view></router-view>
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
       </div>
     </div>
     <app-player></app-player>
