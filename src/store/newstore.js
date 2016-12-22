@@ -20,6 +20,7 @@ export default new Vuex.Store({
 			id:0,
 			name:'guest',
 		},
+		playMode:1, //1单曲循环，2列表播放，3列表循环
 		audio:{
 			isPlaying:false,
 			imgUrl:'http://singerimg.kugou.com/uploadpic/softhead/80/20161121/20161121115938576.jpg',
@@ -57,6 +58,7 @@ export default new Vuex.Store({
 		songIsLogin:false
 	},
 	getters: {
+		playMode: state =>state.playMode,
 	    audio: state => state.audio,
 	    songIsLogin: state => state.songIsLogin,
 	    searchList: state => state.searchList

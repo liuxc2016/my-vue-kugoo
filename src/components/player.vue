@@ -29,7 +29,7 @@
 </template>
 <script>
 import Vue from 'vue'
-import {mapGetters} from 'vuex'
+import {mapGetters, mapStates} from 'vuex'
 
 Vue.filter('my-filter-time', function (onlySecond) {
   // 返回处理后的值
@@ -66,7 +66,7 @@ export default {
 				this.$store.commit("setCurrentFlag", false);  //关闭调整时间标识
 			}
 		},
-      ...mapGetters(['audio', 'songIsLogin'])
+      	...mapGetters(['audio', 'songIsLogin', 'playMode'])
     },
 	methods:{
 		togglePanel: function(){
@@ -108,9 +108,14 @@ export default {
 			}
 		},
 		audioEnded(){
-			// alert(1)
-			console.log("播放完了！")
-			this.playNextSong();
+			console.log(this.playMode);
+			if(this.playMode == 1){
+				console.log("单曲模式，重新播放");
+				document.getElementById("audioPlay").play();
+			}else if (this.playMode == 2) {
+				this.playNextSong();
+			}
+			
 		}
 	}
 }
