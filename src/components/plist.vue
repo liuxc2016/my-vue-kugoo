@@ -19,7 +19,7 @@ export default {
 	},
 	methods:{
 		getPlist(){
-			let gurl = 'http://localhost/test/rank.php?type=plist'
+			let gurl = 'http://www.toudin.com/kuapi.php?type=plist'
 			let that = this
 			axios.get(gurl).then(function(res){
 				that.plists = res.data;
