@@ -9,6 +9,7 @@
 		<div class="rankinfo-list">
 			<mt-cell :title="music.name" v-for="music in plistinfos">
 			  <span @click="playIt(music.hash)">点击试听</span>
+			  <span @click="addToMusicList(music)">加入列表</span>
 			 </mt-cell>
 		</div>
 	</div>
@@ -40,6 +41,9 @@ export default{
 				console.log(res.data[1].name);
 				that.plistinfos = res.data;
 			})
+		},
+		addToMusicList(music){
+			this.$store.commit('addToSongList', music)
 		}
 	},
 	watch:{

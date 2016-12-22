@@ -35,8 +35,9 @@ export default new Vuex.Store({
 			hash:'57b83eaf673d77ee21009cbd8fd05bd6',
 			lyric:{}
 		},
-		songList:[],
-		searchList:[],
+		songList:[],   //歌单
+		willPlay:{},
+		searchList:[],  //搜索列表: {name: hash}
 		songIsLogin:false
 	},
 	getters: {
@@ -62,15 +63,19 @@ export default new Vuex.Store({
 		addToSearchList(state, newSearch){
 			state.searchList = newSearch
 		},
-		playNextSong(state, val){
-			// getSongDetail();
-			if(state.songList.length > 0){
-				state.audio = state.songList.pop()
-			}
+		addToSongList(state, song){
+			state.songList.push(song)
 		},
+
 		setLyric(state, val){
 			state.audio.lyric = val
-		}
+		},
+		setWillPlay(state){
+			// getSongDetail();
+			let music = state.songList.pop();
+			console.log(state.songList)
+			state.willPlay = music;
+		},
 	},
 	actions: {
 		actIncrement(context, val){
@@ -128,7 +133,7 @@ export default new Vuex.Store({
 				console.log("error get music list!");
 			})
 		},
-		getSongDetail(context){
+		getSongDetail(context, hash){
 			//let durl = "http://trackercdn.kugou.com/i/v2/?cdnBackup=1&behavior=play&key=e1408b261057bd0238bd7a9ca1d33a1e&pid=6&module=&appid=2739&cmd=23&hash=88C7AE08A4A0B38552D9C33992EF1872"
 			const apiurl = "https://bird.ioliu.cn/v1?url="
 			const durl = apiurl+'http://m.kugou.com/app/i/getSongInfo.php?hash=2b616f6ab9f8655210fd823b900085cc&cmd=playInfo'
@@ -201,6 +206,7 @@ export default new Vuex.Store({
 				}
 				context.commit('setAudio', dsong);
 				context.dispatch('getLyric', hashVal);
+				// document.getElementById("audioPlay").play();
 			},function(err){
 				alert('网络错误')
 			})
@@ -234,7 +240,18 @@ export default new Vuex.Store({
 				}
 				context.commit("setLyric", lyrics)
 			})
-		}
+		},
+		playNextSong(context){
+			if(context.state.songList.length > 0){
+				context.commit('setWillPlay')
+			
+				context.dispatch("playAnSongWithHash", context.state.willPlay.hash);
+			}else{
+				console.log('播放列表已经是空的了');
+			}
+
+		},
+
 
 	}
 })

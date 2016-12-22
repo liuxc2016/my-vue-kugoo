@@ -1,6 +1,6 @@
 <template>
 	<div class="player app-player" v-show="bshow" :class="{'audio_panel_hide':toggleHide}">
-		<audio :src="audio.musicSrc" loop id="audioPlay" @timeupdate="change()"></audio>
+		<audio :src="audio.musicSrc" id="audioPlay" @timeupdate="change" @ended="audioEnded"></audio>
 		<div class="player-panel-control" @click="togglePanel">
 			<mt-spinner type="snake" :size="27" v-show="songIsLogin"></mt-spinner>
 		</div>
@@ -19,9 +19,9 @@
 				</div>
 			</div>
 			<div class="player-btn-group">
-				<span class="player-btn mplay-btn mplay-prev-btn" @click="getNextSong"></span>
+				<span class="player-btn mplay-btn mplay-prev-btn" @click="playNextSong"></span>
 				<span class="player-btn mplay-btn" :class="playingClass" @click="toggleStatus"></span>
-				<span class="player-btn mplay-btn mplay-next-btn" @click="getNextSong"></span>
+				<span class="player-btn mplay-btn mplay-next-btn" @click="playNextSong"></span>
 			</div>
 		</div>
 		
@@ -83,9 +83,14 @@ export default {
 		goToLyricPage(){
 			this.$router.replace("/lyric")
 		},
-		getNextSong: function(){
-			this.$store.dispatch('getSongDetail')
-			this.$store.commit("playNextSong");
+		playNextSong: function(){
+			// this.$store.dispatch('getSongDetail')
+			this.$store.dispatch("playNextSong");
+			document.getElementById('audioPlay').addEventListener('canplay', function(){
+				this.$store.commit("togglePlayStatus", true);
+				document.getElementById("audioPlay").play();
+			}.bind(this))
+
 		},
 		getSongList: function(){
 			this.$store.dispatch('getSongList', this)
@@ -101,6 +106,11 @@ export default {
 			}else{
 				this.$store.commit("setCurrentTime", time);
 			}
+		},
+		audioEnded(){
+			// alert(1)
+			console.log("播放完了！")
+			this.playNextSong();
 		}
 	}
 }
