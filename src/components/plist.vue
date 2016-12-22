@@ -2,9 +2,10 @@
 	<div id="plist">
 		<div class="p-list">
 			<mt-cell :title="plist.name" v-for="plist in plists">
-			<span><router-link :to="{ name: 'plistinfo', params: { id: plist.id }}">点击浏览{{plist.listend}}</router-link></span>
+			<span><router-link :to="{ name: 'plistinfo', params: { id: plist.id }}"><mt-badge size="normal">{{plist.listend}}</mt-badge></router-link></span>
 			  <img slot="icon" :src="plist.imgUrl" width="24" height="24">
 			</mt-cell>
+
 		</div>
 	</div>
 </template>
