@@ -19,6 +19,7 @@
 				</div>
 			</div>
 			<div class="player-btn-group">
+				<span class="player-btn mplay-btn" v-bind:class="playModeClass" @click="changePlayMode" :alt="playModeAlt" :title="playModeAlt"></span>
 				<span class="player-btn mplay-btn mplay-prev-btn" @click="playNextSong"></span>
 				<span class="player-btn mplay-btn" :class="playingClass" @click="toggleStatus"></span>
 				<span class="player-btn mplay-btn mplay-next-btn" @click="playNextSong"></span>
@@ -52,6 +53,23 @@ export default {
 		}
 	},
 	computed:{
+		playModeClass(){
+			return {
+				singermodeclass: this.playMode==1,
+				listrecmodeclass: this.playMode==2,
+				listrandmodeclass: this.playMode==3
+
+			}
+		},
+		playModeAlt(){
+			if(this.playMode ==1){
+				return '单曲模式'
+			}else if (this.playMode ==2) {
+				return '列表循环'
+			}else if (this.playMode ==3) {
+				return '列表随机'
+			}
+		},
 		playingClass(){
 			return this.audio.isPlaying? 'mplay-zan-btn': 'mplay-play-btn'
 		},
@@ -69,6 +87,9 @@ export default {
       	...mapGetters(['audio', 'songIsLogin', 'playMode'])
     },
 	methods:{
+		changePlayMode: function(){
+			this.$store.commit("setPlayMode")
+		},
 		togglePanel: function(){
 			this.toggleHide=!this.toggleHide
 		},
@@ -112,7 +133,7 @@ export default {
 			if(this.playMode == 1){
 				console.log("单曲模式，重新播放");
 				document.getElementById("audioPlay").play();
-			}else if (this.playMode == 2) {
+			}else{
 				this.playNextSong();
 			}
 			
@@ -230,6 +251,18 @@ export default {
 	 	width:30px;
 	 	height: 30px;
 	 	background-image: url("../assets/next.png")
+	 }
+	 /*列表循环2*/
+	 .listrecmodeclass{
+	 	background-image: url("../assets/listrec.png")
+	 }
+ 	 /*列表随机3*/
+	 .listrandmodeclass{
+	 	background-image: url("../assets/listrand.png")
+	 }
+	 /*单曲1*/
+	 .singermodeclass{
+	 	background-image: url("../assets/listsinger.png")
 	 }
 
 </style>

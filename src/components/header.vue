@@ -28,11 +28,16 @@ import {mapState} from 'vuex'
 		data(){
 			return {
 				headTitle: "点击下载",
-				bangumiId: '2'
+				// bangumiId: '2'
 			}
 		},
 		computed: {
-	      ...mapState(['headNav', 'bShowNav'])
+			bangumiId:{
+				get(){
+					return String(this.$store.state.headNav)
+				}
+			},
+	      ...mapState(['bShowNav'])
 	    },
 		methods:{
 			setNav(id){

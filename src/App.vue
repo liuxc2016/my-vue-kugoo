@@ -34,35 +34,8 @@ export default {
   // // 映射 this.count 为 store.state.count
   // 'count', 'overCount'
   // ]),
-  computed: {
-    a(){
-      return 111 + Date()
-    },
-    b:{ 
-        get(){
-          return this.$store.state.twoSideCount
-        },
-        set(value){
-         this.$store.commit('addTwoSideCount', value)
-        }
-
-    },
-    ...mapState({
-      overCount: state => state.overCount,
-      count: state => state.count
-    })
-  },
-  methods: {
-    addIt: function(){
-      this.$store.commit('increment')
-      console.log(this.$store.state.count) // -> 1
-    },
-    subIt: function(){
-      this.$store.commit('decrement')
-    },
-    actAdd: function(){
-      this.$store.dispatch('actIncrement', {amount: 1})
-    }
+  mounted(){
+    this.$router.replace({path: '/home'})
   }
 }
 </script>

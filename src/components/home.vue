@@ -43,6 +43,14 @@
 			playIt(val){
 				this.$store.dispatch("playAnSongWithHash", val)
 				console.log(val)
+			},
+			activated(){
+				console.log(111);
+				this.$store.commit("setHeadNav", 1);
+			},
+			mounted(){
+				console.log(2);
+				this.$store.commit("setHeadNav", 1);
 			}
 		}
 	}

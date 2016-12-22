@@ -4,6 +4,8 @@ import {Toast, Indicator } from 'mint-ui'
 import axios from 'axios'
 import VueResource from 'vue-resource'
 
+import _ from 'lodash'
+
 
 Vue.use(Vuex)
 Vue.use(VueResource)
@@ -20,7 +22,8 @@ export default new Vuex.Store({
 			id:0,
 			name:'guest',
 		},
-		playMode:1, //1单曲循环，2列表播放，3列表循环
+		playMode:2, //1单曲循环，2列表循环, 3列表随机
+		songListIndex:0,  //当前歌曲在songList中的位置
 		audio:{
 			isPlaying:false,
 			imgUrl:'http://singerimg.kugou.com/uploadpic/softhead/80/20161121/20161121115938576.jpg',
@@ -61,11 +64,13 @@ export default new Vuex.Store({
 		playMode: state =>state.playMode,
 	    audio: state => state.audio,
 	    songIsLogin: state => state.songIsLogin,
-	    searchList: state => state.searchList
+	    searchList: state => state.searchList,
+	    playMode : state => state.playMode
   	},
 	mutations: {
 		setHeadNav: (state , id) => state.headNav = id,
 		setbShowNav: (state, val) => state.bShowNav = val,
+		setPlayMode : state => state.playMode = (state.playMode + 1)%3 + 1,
 		setCurrentTime: (state, time) => {
 			state.audio.currentTime = time
 		},
@@ -84,15 +89,20 @@ export default new Vuex.Store({
 		addToSongList(state, song){
 			console.log('添加歌曲至列表成功'+ song.hash);
 			state.songList.push(song)
+			state.songList = _.uniq(state.songList, 'hash');
 		},
 
 		setLyric(state, val){
 			state.audio.lyric = val
 		},
 		setWillPlay(state){
-			// getSongDetail();
-			let music = state.songList.pop();
-			// console.log(state.songList)
+			let music = {}
+			if(state.playMode == 2){
+				music = state.songList.pop();
+			}else if (state.playMode == 3) {
+				music = state.songList[_.random(state.songList.length-1)];
+			}
+			console.log(music);
 			state.willPlay = music;
 		},
 	},
