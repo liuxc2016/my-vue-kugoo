@@ -50,6 +50,9 @@ export default{
 		// console.log(this.$route);
 		this.getSonglist()
 	},
+	deactivated(){
+		this.$store.commit("setbShowNav", true)
+	},
 	destroyed(){
 		this.$store.commit("setbShowNav", true)
 	}
